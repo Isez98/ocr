@@ -45,6 +45,21 @@ ocr/
 │   ├── snap_to_ink.py       # Template refinement
 │   └── optimize_rois.py     # ROI optimization
 │
+├── training/                  # Model training scripts
+│   ├── train_gpu.py          # GPU training (ROCm/CUDA)
+│   └── README.md             # Training documentation
+│
+├── debugging/                 # Debugging and troubleshooting
+│   ├── debug_rocm.py         # ROCm diagnostics
+│   ├── fix_rocm_rx6800.py    # AMD GPU workarounds
+│   └── README.md             # Debug documentation
+│
+├── models/                    # Model management
+│   ├── test_model.py         # Model testing and comparison
+│   ├── production_text_recognizer.py  # Production OCR
+│   ├── integrate_model.py    # Model deployment
+│   └── README.md             # Model documentation
+│
 ├── tests/                     # Tests and debugging
 │   ├── test_*.py            # Unit tests
 │   ├── debug_*.py           # Debug scripts

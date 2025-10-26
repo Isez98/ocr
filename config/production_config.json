@@ -1,0 +1,15 @@
+{
+  "recommendation": "use_base_model",
+  "reason": "Base model outperforms fine-tuned model",
+  "text_recognizer": {
+    "model_type": "base_trocr",
+    "model_path": "microsoft/trocr-base-handwritten",
+    "confidence_threshold": 0.5,
+    "device": "cpu"
+  },
+  "notes": [
+    "Fine-tuned model showed 0% accuracy vs base model's higher accuracy",
+    "Base model correctly recognizes text while fine-tuned outputs only '$.' patterns",
+    "Consider improving synthetic data quality for future training attempts"
+  ]
+}
