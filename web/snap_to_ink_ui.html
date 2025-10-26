@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snap-to-Ink Template Refiner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .changes-list {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .change-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        .coordinates {
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .preview-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .preview-image {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Snap-to-Ink Template Refiner</h1>
+        <p>Automatically refine OCR template ROI boxes by detecting ink bounds and applying type-specific padding.</p>
+        
+        <div class="form-group">
+            <label for="templateId">Template ID:</label>
+            <input type="text" id="templateId" placeholder="Enter template ID (e.g., form_v1)" value="form_v1">
+        </div>
+        
+        <button onclick="refineTemplate()" id="refineBtn">
+            🎯 Apply Snap-to-Ink Refinement
+        </button>
+        
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function refineTemplate() {
+            const templateId = document.getElementById('templateId').value.trim();
+            const resultsDiv = document.getElementById('results');
+            const refineBtn = document.getElementById('refineBtn');
+            
+            if (!templateId) {
+                resultsDiv.innerHTML = '<div class="error">Please enter a template ID</div>';
+                return;
+            }
+            
+            // Disable button and show loading
+            refineBtn.disabled = true;
+            refineBtn.textContent = '🔄 Processing...';
+            resultsDiv.innerHTML = '<div>Processing template refinement...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('template_id', templateId);
+                
+                const response = await fetch('http://localhost:8001/snap-to-ink', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displaySuccess(result);
+                } else {
+                    displayError(result.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                displayError('Network error: ' + error.message);
+            } finally {
+                // Re-enable button
+                refineBtn.disabled = false;
+                refineBtn.textContent = '🎯 Apply Snap-to-Ink Refinement';
+            }
+        }
+        
+        function displaySuccess(result) {
+            const resultsDiv = document.getElementById('results');
+            
+            const statsHtml = `
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">${result.total_rois}</div>
+                        <div class="stat-label">Total ROIs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${result.rois_changed}</div>
+                        <div class="stat-label">ROIs Changed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">${Math.round(result.rois_changed / result.total_rois * 100)}%</div>
+                        <div class="stat-label">Change Rate</div>
+                    </div>
+                </div>
+            `;
+            
+            let changesHtml = '';
+            if (result.changes && result.changes.length > 0) {
+                changesHtml = `
+                    <h3>📋 Changes Applied:</h3>
+                    <div class="changes-list">
+                        ${result.changes.map(change => `
+                            <div class="change-item">
+                                <strong>${change.name}</strong><br>
+                                <span class="coordinates">
+                                    Original: (${change.original.x}, ${change.original.y}, ${change.original.w}, ${change.original.h})<br>
+                                    Refined:  (${change.refined.x}, ${change.refined.y}, ${change.refined.w}, ${change.refined.h})
+                                </span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                changesHtml = '<div class="success">✅ No changes needed - all ROIs were already optimally positioned!</div>';
+            }
+            
+            let previewHtml = '';
+            if (result.preview_image_b64) {
+                previewHtml = `
+                    <div class="preview-container">
+                        <h3>🔍 Preview (Red=Original, Green=Refined):</h3>
+                        <img src="data:image/png;base64,${result.preview_image_b64}" alt="Refinement Preview" class="preview-image">
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = `
+                <div class="success">✅ Template "${result.template_id}" refined successfully!</div>
+                <p><strong>Backup created:</strong> ${result.backup_created}</p>
+                ${statsHtml}
+                ${changesHtml}
+                ${previewHtml}
+            `;
+        }
+        
+        function displayError(error) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="error">❌ Error: ${error}</div>`;
+        }
+        
+        // Allow Enter key to trigger refinement
+        document.getElementById('templateId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                refineTemplate();
+            }
+        });
+    </script>
+</body>
+</html>

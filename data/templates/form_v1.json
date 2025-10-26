@@ -1,0 +1,10 @@
+{
+  "id": "form_v1_rel",
+  "canvas_width": 1653,
+  "canvas_height": 2339,
+  "units": "relative",
+  "canonical_image": "templates/canonical_form_v1.png",
+  "rois": [
+    { "name": "guest_name",   "x": 0.2046, "y": 0.1500, "w": 0.6098, "h": 0.0582, "type": "text",     "pad": 14 }
+  ]
+}

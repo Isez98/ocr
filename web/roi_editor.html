@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Editor</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; gap: 20px; }
+        .image-container { 
+            position: relative; 
+            border: 2px solid #ccc;
+            display: inline-block;
+        }
+        .roi-overlay {
+            position: absolute;
+            border: 2px solid red;
+            background: rgba(255, 0, 0, 0.1);
+            cursor: move;
+        }
+        .roi-label {
+            position: absolute;
+            background: red;
+            color: white;
+            padding: 2px 5px;
+            font-size: 12px;
+            top: -20px;
+            left: 0;
+        }
+        .controls { 
+            width: 300px; 
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .roi-item {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .roi-item.active {
+            background-color: #e6f3ff;
+            border-color: #007acc;
+        }
+        input, select { width: 100%; margin: 5px 0; }
+        button { padding: 8px 12px; margin: 5px; }
+        #output { 
+            width: 100%; 
+            height: 200px; 
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ROI Editor for Form Templates</h1>
+    
+    <div class="container">
+        <div>
+            <div class="image-container" id="imageContainer">
+                <img id="canonicalImage" src="" alt="Load an image to start">
+            </div>
+        </div>
+        
+        <div class="controls">
+            <h3>Controls</h3>
+            
+            <div>
+                <label>Load Canonical Image:</label>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+            
+            <div>
+                <label>Template ID:</label>
+                <input type="text" id="templateId" value="form_v1">
+            </div>
+            
+            <div>
+                <button onclick="addROI()">Add ROI</button>
+                <button onclick="deleteSelectedROI()">Delete Selected</button>
+                <button onclick="exportJSON()">Export JSON</button>
+            </div>
+            
+            <div id="roiList">
+                <h4>ROIs:</h4>
+            </div>
+            
+            <div>
+                <h4>JSON Output:</h4>
+                <textarea id="output" placeholder="JSON will appear here..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let rois = [];
+        let selectedROI = null;
+        let isDrawing = false;
+        let startX, startY;
+        let imageScale = 1;
+        let originalWidth, originalHeight;
+
+        const imageContainer = document.getElementById('imageContainer');
+        const canonicalImage = document.getElementById('canonicalImage');
+        const roiList = document.getElementById('roiList');
+        const output = document.getElementById('output');
+
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    canonicalImage.src = event.target.result;
+                    canonicalImage.onload = function() {
+                        originalWidth = this.naturalWidth;
+                        originalHeight = this.naturalHeight;
+                        
+                        // Scale image to fit screen while maintaining aspect ratio
+                        const maxWidth = 800;
+                        const maxHeight = 600;
+                        
+                        if (originalWidth > maxWidth || originalHeight > maxHeight) {
+                            const scaleX = maxWidth / originalWidth;
+                            const scaleY = maxHeight / originalHeight;
+                            imageScale = Math.min(scaleX, scaleY);
+                        } else {
+                            imageScale = 1;
+                        }
+                        
+                        this.style.width = (originalWidth * imageScale) + 'px';
+                        this.style.height = (originalHeight * imageScale) + 'px';
+                        
+                        setupImageEvents();
+                        renderROIs();
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function setupImageEvents() {
+            imageContainer.addEventListener('mousedown', startDrawing);
+            imageContainer.addEventListener('mousemove', drawROI);
+            imageContainer.addEventListener('mouseup', endDrawing);
+        }
+
+        function startDrawing(e) {
+            if (e.target === canonicalImage) {
+                isDrawing = true;
+                const rect = imageContainer.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+            }
+        }
+
+        function drawROI(e) {
+            if (!isDrawing) return;
+            
+            const rect = imageContainer.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            
+            // Remove temporary ROI overlay if it exists
+            const tempOverlay = document.querySelector('.temp-roi');
+            if (tempOverlay) tempOverlay.remove();
+            
+            // Create temporary ROI overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'roi-overlay temp-roi';
+            overlay.style.left = Math.min(startX, currentX) + 'px';
+            overlay.style.top = Math.min(startY, currentY) + 'px';
+            overlay.style.width = Math.abs(currentX - startX) + 'px';
+            overlay.style.height = Math.abs(currentY - startY) + 'px';
+            overlay.style.border = '2px dashed blue';
+            
+            imageContainer.appendChild(overlay);
+        }
+
+        function endDrawing(e) {
+            if (!isDrawing) return;
+            isDrawing = false;
+            
+            const rect = imageContainer.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            
+            // Calculate ROI coordinates in original image dimensions
+            const x = Math.round(Math.min(startX, currentX) / imageScale);
+            const y = Math.round(Math.min(startY, currentY) / imageScale);
+            const w = Math.round(Math.abs(currentX - startX) / imageScale);
+            const h = Math.round(Math.abs(currentY - startY) / imageScale);
+            
+            if (w > 10 && h > 10) { // Minimum size
+                const roiName = prompt('Enter ROI name:');
+                if (roiName) {
+                    const roiType = prompt('Enter ROI type (text/digits/currency/date):', 'text');
+                    rois.push({
+                        name: roiName,
+                        x: x,
+                        y: y,
+                        w: w,
+                        h: h,
+                        type: roiType || 'text'
+                    });
+                    renderROIs();
+                    updateOutput();
+                }
+            }
+            
+            // Remove temporary overlay
+            const tempOverlay = document.querySelector('.temp-roi');
+            if (tempOverlay) tempOverlay.remove();
+        }
+
+        function addROI() {
+            const name = prompt('Enter ROI name:');
+            if (name) {
+                const type = prompt('Enter ROI type (text/digits/currency/date):', 'text');
+                rois.push({
+                    name: name,
+                    x: 100,
+                    y: 100,
+                    w: 200,
+                    h: 50,
+                    type: type || 'text'
+                });
+                renderROIs();
+                updateOutput();
+            }
+        }
+
+        function deleteSelectedROI() {
+            if (selectedROI !== null) {
+                rois.splice(selectedROI, 1);
+                selectedROI = null;
+                renderROIs();
+                updateOutput();
+            }
+        }
+
+        function renderROIs() {
+            // Clear existing overlays
+            document.querySelectorAll('.roi-overlay:not(.temp-roi)').forEach(el => el.remove());
+            
+            // Render ROI overlays
+            rois.forEach((roi, index) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'roi-overlay';
+                overlay.style.left = (roi.x * imageScale) + 'px';
+                overlay.style.top = (roi.y * imageScale) + 'px';
+                overlay.style.width = (roi.w * imageScale) + 'px';
+                overlay.style.height = (roi.h * imageScale) + 'px';
+                
+                if (selectedROI === index) {
+                    overlay.style.borderColor = 'blue';
+                    overlay.style.backgroundColor = 'rgba(0, 0, 255, 0.1)';
+                }
+                
+                const label = document.createElement('div');
+                label.className = 'roi-label';
+                label.textContent = roi.name;
+                overlay.appendChild(label);
+                
+                overlay.addEventListener('click', () => {
+                    selectedROI = index;
+                    renderROIs();
+                    renderROIList();
+                });
+                
+                imageContainer.appendChild(overlay);
+            });
+            
+            renderROIList();
+        }
+
+        function renderROIList() {
+            const listHtml = rois.map((roi, index) => `
+                <div class="roi-item ${selectedROI === index ? 'active' : ''}" onclick="selectROI(${index})">
+                    <strong>${roi.name}</strong> (${roi.type})<br>
+                    x: <input type="number" value="${roi.x}" onchange="updateROI(${index}, 'x', this.value)">
+                    y: <input type="number" value="${roi.y}" onchange="updateROI(${index}, 'y', this.value)">
+                    w: <input type="number" value="${roi.w}" onchange="updateROI(${index}, 'w', this.value)">
+                    h: <input type="number" value="${roi.h}" onchange="updateROI(${index}, 'h', this.value)">
+                    <select onchange="updateROI(${index}, 'type', this.value)">
+                        <option value="text" ${roi.type === 'text' ? 'selected' : ''}>Text</option>
+                        <option value="digits" ${roi.type === 'digits' ? 'selected' : ''}>Digits</option>
+                        <option value="currency" ${roi.type === 'currency' ? 'selected' : ''}>Currency</option>
+                        <option value="date" ${roi.type === 'date' ? 'selected' : ''}>Date</option>
+                    </select>
+                </div>
+            `).join('');
+            
+            roiList.innerHTML = '<h4>ROIs:</h4>' + listHtml;
+        }
+
+        function selectROI(index) {
+            selectedROI = index;
+            renderROIs();
+        }
+
+        function updateROI(index, property, value) {
+            rois[index][property] = property === 'type' ? value : parseInt(value);
+            renderROIs();
+            updateOutput();
+        }
+
+        function updateOutput() {
+            const template = {
+                id: document.getElementById('templateId').value,
+                canvas_width: originalWidth,
+                canvas_height: originalHeight,
+                canonical_image: "templates/canonical_" + document.getElementById('templateId').value + ".png",
+                rois: rois
+            };
+            
+            output.value = JSON.stringify(template, null, 2);
+        }
+
+        function exportJSON() {
+            updateOutput();
+            const blob = new Blob([output.value], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = document.getElementById('templateId').value + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

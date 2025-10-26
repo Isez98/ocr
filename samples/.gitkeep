@@ -1,0 +1,2 @@
+# This file ensures the samples directory is tracked in git
+# while all sample files are ignored via .gitignore
