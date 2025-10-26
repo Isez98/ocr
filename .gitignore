@@ -206,19 +206,18 @@ temp/
 # *.json
 # *.xml
 
-# Images and media
+# Images and media - Global exclusions
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
+*.pdf
+
 # Exclude all files in samples folder but keep folder structure
 samples/*
 !samples/.gitkeep
-
-# Exclude images and PDFs from data/templates folder
-data/templates/*.png
-data/templates/*.jpg
-data/templates/*.jpeg
-data/templates/*.gif
-data/templates/*.bmp
-data/templates/*.tiff
-data/templates/*.pdf
 
 # OCR/ML specific
 weights/
@@ -238,6 +237,29 @@ training_outputs/
 fine_tuned_models/
 synthetic_data/
 generated_data/
+
+# Trained model directories
+trocr-*/
+**/trocr-*/
+
+# Organized model outputs
+training/trocr-*/
+training/logs/
+training/checkpoints/
+training/*.log
+
+# Model storage
+models/trocr-*/
+models/backups/
+models/cache/
+models/*.pth
+models/*.pt
+models/*.bin
+
+# Debugging outputs
+debugging/core.*
+debugging/*.log
+debugging/test_outputs/
 
 # Configuration files with sensitive data
 config.ini
