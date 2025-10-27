@@ -5,9 +5,20 @@ This directory contains essential debugging and diagnostic tools for the OCR pro
 ## Core Scripts
 
 ### `debug_rocm.py`
-- **Purpose**: Comprehensive ROCm/GPU debugging and diagnostics
+- **Purpose**: Comprehensive ROCm/GPU debugging and diagnostics  
 - **Tests**: Basic operations, model loading, inference, memory stress
 - **Usage**: `python debug_rocm.py`
+- **Status**: ✅ Core diagnostic tool (keep)
+
+### `export_trocr_onnx.py`
+- **Purpose**: Export TrOCR models to ONNX format for deployment
+- **Features**: Model conversion, validation, optimization
+- **Usage**: `python export_trocr_onnx.py`
+- **Status**: ✅ Essential for ONNX pipeline (keep)
+
+## ✅ Current Status
+
+All essential debugging tools retained. Redundant test scripts removed during cleanup.
 - **Output**: Detailed test results and recommendations
 
 ### `test_cpu_vs_gpu.py`
