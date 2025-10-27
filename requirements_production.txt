@@ -1,0 +1,40 @@
+# OCR Project Requirements - Working Configuration
+# PyTorch 2.9.0+rocm6.4 - GPU Training Operational
+# Last Updated: October 26, 2025
+
+# Core ML Framework - AMD GPU Support
+torch==2.9.0+rocm6.4
+torchaudio==2.9.0+rocm6.4
+torchvision==0.24.0+rocm6.4
+pytorch-triton-rocm==3.5.0
+
+# Transformers and Models
+transformers==4.46.3
+huggingface-hub==0.36.0
+accelerate==1.11.0
+datasets==4.3.0
+evaluate==0.4.6
+
+# ONNX Runtime - Deployment Support
+onnx==1.19.1
+onnxruntime-rocm==1.22.2.post1
+
+# Core Libraries
+numpy==2.3.4
+pillow==12.0.0
+pandas==2.3.3
+fastapi==0.103.1
+uvicorn==0.23.2
+
+# Development and Testing
+pytest==7.4.2
+pytest-asyncio==0.21.1
+requests==2.32.5
+
+# Utilities
+tqdm==4.67.1
+coloredlogs==15.0.1
+pyyaml==6.0.3
+
+# Find complete dependency list in requirements_current.txt
+# Install with: pip install --index-url https://download.pytorch.org/whl/rocm6.4 -r requirements.txt
