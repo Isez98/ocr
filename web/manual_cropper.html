@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+pillow==10.0.1<head>
+
+opencv-python==4.8.1.78    <meta charset="UTF-8">
+
+numpy==1.24.4    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Guest Name Cropper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .controls button:hover {
+            background: #45a049;
+        }
+        
+        .controls button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .controls .secondary {
+            background: #2196F3;
+        }
+        
+        .controls .secondary:hover {
+            background: #1976D2;
+        }
+        
+        .controls .danger {
+            background: #f44336;
+        }
+        
+        .controls .danger:hover {
+            background: #d32f2f;
+        }
+        
+        .image-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .main-image {
+            flex: 2;
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        
+        .canvas-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        #imageCanvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            cursor: crosshair;
+        }
+        
+        .selection-overlay {
+            position: absolute;
+            border: 2px dashed #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            pointer-events: none;
+            display: none;
+        }
+        
+        .crops-panel {
+            flex: 1;
+            max-height: 800px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafafa;
+        }
+        
+        .crops-header {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .crop-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .crop-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .crop-preview {
+            width: 60px;
+            height: 40px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            object-fit: cover;
+            background: white;
+        }
+        
+        .crop-info {
+            flex: 1;
+        }
+        
+        .crop-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        
+        .crop-dims {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .crop-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .crop-actions button {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .crop-actions button:hover {
+            background: #d32f2f;
+        }
+        
+        .file-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .file-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .file-item.active {
+            background: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .file-name {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .file-status {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .file-status.completed {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            margin: 0 0 10px 0;
+            color: #856404;
+        }
+        
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+            color: #856404;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .zoom-controls input[type="range"] {
+            width: 100px;
+        }
+        
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .alert.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .guest-name-input {
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .guest-name-input input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .guest-name-input button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .guest-name-input button.cancel {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                ✂️ Manual Guest Name Cropper
+                <span style="font-size: 16px; color: #666; font-weight: normal;">
+                    Extract guest names from template forms
+                </span>
+            </h1>
+        </div>
+
+        <div class="alert" id="alertBox"></div>
+
+        <div class="instructions">
+            <h3>📋 Instructions</h3>
+            <ul>
+                <li><strong>Click and drag</strong> on the image to select a guest name region</li>
+                <li><strong>Enter guest name</strong> when prompted after selecting an area</li>
+                <li><strong>Use zoom</strong> controls to get precise selections</li>
+                <li><strong>Navigate files</strong> using the file list on the right</li>
+                <li><strong>Save progress</strong> regularly using the download button</li>
+            </ul>
+        </div>
+
+        <div class="status">
+            <div>
+                <strong>Progress:</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <span id="progressText">0 of 0 files completed</span>
+            </div>
+            <div>
+                <strong>Current:</strong> <span id="currentFile">No file selected</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+            <button onclick="document.getElementById('fileInput').click()">
+                📁 Load Template Images
+            </button>
+            <button id="clearSelection" onclick="clearSelection()" disabled>
+                🗑️ Clear Selection
+            </button>
+            <button id="downloadCrops" onclick="downloadAllCrops()" class="secondary" disabled>
+                💾 Download All Crops
+            </button>
+            <button id="resetAll" onclick="resetAll()" class="danger">
+                🔄 Reset All
+            </button>
+            
+            <div class="zoom-controls">
+                <label>Zoom:</label>
+                <input type="range" id="zoomSlider" min="0.1" max="3" step="0.1" value="1" onchange="updateZoom()">
+                <span id="zoomValue">100%</span>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <div class="main-image">
+                <div class="canvas-container">
+                    <canvas id="imageCanvas"></canvas>
+                    <div class="selection-overlay" id="selectionOverlay"></div>
+                </div>
+                
+                <div class="guest-name-input" id="guestNameInput">
+                    <input type="text" id="guestNameText" placeholder="Enter guest name (e.g., John Smith)" maxlength="50">
+                    <button onclick="saveCrop()">✅ Save Crop</button>
+                    <button class="cancel" onclick="cancelCrop()">❌ Cancel</button>
+                </div>
+            </div>
+
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                <div class="file-list">
+                    <div style="background: #4CAF50; color: white; padding: 10px; font-weight: bold;">
+                        📁 Template Files (<span id="fileCount">0</span>)
+                    </div>
+                    <div id="fileListContainer">
+                        <div style="padding: 20px; text-align: center; color: #666;">
+                            No files loaded. Click "Load Template Images" to start.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crops-panel">
+                    <div class="crops-header">
+                        ✂️ Extracted Crops (<span id="cropCount">0</span>)
+                    </div>
+                    <div id="cropsContainer">
+                        <div style="padding: 20px; text-align: center; color: #666;">
+                            No crops yet. Start selecting guest name regions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let files = [];
+        let currentFileIndex = -1;
+        let crops = [];
+        let isSelecting = false;
+        let startPos = {x: 0, y: 0};
+        let currentSelection = null;
+        let canvas, ctx;
+        let currentImage = null;
+        let imageScale = 1;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            canvas = document.getElementById('imageCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // File input handler
+            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+            
+            // Canvas mouse events
+            canvas.addEventListener('mousedown', startSelection);
+            canvas.addEventListener('mousemove', updateSelection);
+            canvas.addEventListener('mouseup', endSelection);
+            
+            // Prevent context menu
+            canvas.addEventListener('contextmenu', e => e.preventDefault());
+            
+            // Load saved data
+            loadSavedProgress();
+        });
+
+        function handleFileSelect(event) {
+            const selectedFiles = Array.from(event.target.files);
+            if (selectedFiles.length === 0) return;
+            
+            files = selectedFiles.map((file, index) => ({
+                file: file,
+                name: file.name,
+                index: index,
+                completed: false,
+                cropCount: 0
+            }));
+            
+            updateFileList();
+            updateProgress();
+            
+            if (files.length > 0) {
+                loadFile(0);
+            }
+            
+            showAlert('success', `Loaded ${files.length} template images`);
+        }
+
+        function updateFileList() {
+            const container = document.getElementById('fileListContainer');
+            document.getElementById('fileCount').textContent = files.length;
+            
+            if (files.length === 0) {
+                container.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No files loaded. Click "Load Template Images" to start.</div>';
+                return;
+            }
+            
+            container.innerHTML = files.map((file, index) => `
+                <div class="file-item ${index === currentFileIndex ? 'active' : ''}" onclick="loadFile(${index})">
+                    <div>
+                        <div class="file-name">${file.name}</div>
+                        <div style="font-size: 12px; color: #666;">${file.cropCount} crops extracted</div>
+                    </div>
+                    <div class="file-status ${file.completed ? 'completed' : ''}">${file.completed ? 'Completed' : 'Pending'}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadFile(index) {
+            if (index < 0 || index >= files.length) return;
+            
+            currentFileIndex = index;
+            const file = files[index];
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    currentImage = img;
+                    drawImage();
+                    updateFileList();
+                    document.getElementById('currentFile').textContent = file.name;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file.file);
+        }
+
+        function drawImage() {
+            if (!currentImage) return;
+            
+            const maxWidth = 800;
+            const maxHeight = 600;
+            
+            let width = currentImage.width;
+            let height = currentImage.height;
+            
+            // Scale to fit container
+            if (width > maxWidth || height > maxHeight) {
+                const scale = Math.min(maxWidth / width, maxHeight / height);
+                width *= scale;
+                height *= scale;
+            }
+            
+            // Apply zoom
+            width *= imageScale;
+            height *= imageScale;
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(currentImage, 0, 0, width, height);
+        }
+
+        function startSelection(e) {
+            if (!currentImage) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            startPos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            
+            isSelecting = true;
+            canvas.style.cursor = 'crosshair';
+            
+            // Hide any existing selection
+            document.getElementById('selectionOverlay').style.display = 'none';
+            document.getElementById('guestNameInput').style.display = 'none';
+        }
+
+        function updateSelection(e) {
+            if (!isSelecting) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const currentPos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            
+            const overlay = document.getElementById('selectionOverlay');
+            const x = Math.min(startPos.x, currentPos.x);
+            const y = Math.min(startPos.y, currentPos.y);
+            const width = Math.abs(currentPos.x - startPos.x);
+            const height = Math.abs(currentPos.y - startPos.y);
+            
+            overlay.style.left = x + 'px';
+            overlay.style.top = y + 'px';
+            overlay.style.width = width + 'px';
+            overlay.style.height = height + 'px';
+            overlay.style.display = 'block';
+        }
+
+        function endSelection(e) {
+            if (!isSelecting) return;
+            
+            isSelecting = false;
+            canvas.style.cursor = 'default';
+            
+            const rect = canvas.getBoundingClientRect();
+            const endPos = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+            
+            const x = Math.min(startPos.x, endPos.x);
+            const y = Math.min(startPos.y, endPos.y);
+            const width = Math.abs(endPos.x - startPos.x);
+            const height = Math.abs(endPos.y - startPos.y);
+            
+            // Minimum selection size
+            if (width < 10 || height < 10) {
+                document.getElementById('selectionOverlay').style.display = 'none';
+                return;
+            }
+            
+            currentSelection = {x, y, width, height};
+            document.getElementById('guestNameInput').style.display = 'block';
+            document.getElementById('guestNameText').focus();
+            document.getElementById('clearSelection').disabled = false;
+        }
+
+        async function saveCrop() {
+            const guestName = document.getElementById('guestNameText').value.trim();
+            if (!guestName) {
+                showAlert('error', 'Please enter a guest name');
+                return;
+            }
+            
+            if (!currentSelection || !currentImage) {
+                showAlert('error', 'No selection made');
+                return;
+            }
+            
+            // Create crop canvas
+            const cropCanvas = document.createElement('canvas');
+            const cropCtx = cropCanvas.getContext('2d');
+            
+            // Calculate actual image coordinates
+            const scaleX = currentImage.width / canvas.width;
+            const scaleY = currentImage.height / canvas.height;
+            
+            const cropX = currentSelection.x * scaleX;
+            const cropY = currentSelection.y * scaleY;
+            const cropWidth = currentSelection.width * scaleX;
+            const cropHeight = currentSelection.height * scaleY;
+            
+            cropCanvas.width = cropWidth;
+            cropCanvas.height = cropHeight;
+            
+            cropCtx.drawImage(
+                currentImage,
+                cropX, cropY, cropWidth, cropHeight,
+                0, 0, cropWidth, cropHeight
+            );
+            
+            // Create crop object
+            const crop = {
+                id: Date.now(),
+                fileName: files[currentFileIndex].name,
+                guestName: guestName,
+                canvas: cropCanvas,
+                dataUrl: cropCanvas.toDataURL('image/png'),
+                dimensions: {
+                    x: Math.round(cropX),
+                    y: Math.round(cropY),
+                    width: Math.round(cropWidth),
+                    height: Math.round(cropHeight)
+                }
+            };
+
+            try {
+                // Try to save to server
+                const serverData = {
+                    imageData: crop.dataUrl,
+                    guestName: guestName,
+                    fileName: files[currentFileIndex].name,
+                    dimensions: crop.dimensions
+                };
+
+                const response = await fetch('http://localhost:5000/api/save_crop', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(serverData)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        crop.serverSaved = true;
+                        crop.serverId = result.crop_id;
+                        showAlert('success', `✅ Server: ${result.message}`);
+                    } else {
+                        throw new Error(result.error);
+                    }
+                } else {
+                    throw new Error('Server response not ok');
+                }
+            } catch (error) {
+                console.warn('Server save failed, saving locally only:', error);
+                crop.serverSaved = false;
+                showAlert('warning', `💾 Saved locally only (server offline): "${guestName}"`);
+            }
+            
+            crops.push(crop);
+            files[currentFileIndex].cropCount++;
+            
+            updateCropsList();
+            clearSelection();
+            saveProgress();
+            
+            if (crop.serverSaved) {
+                showAlert('success', `✅ Saved to server: "${guestName}"`);
+            }
+        }
+
+        function cancelCrop() {
+            clearSelection();
+        }
+
+        function clearSelection() {
+            currentSelection = null;
+            document.getElementById('selectionOverlay').style.display = 'none';
+            document.getElementById('guestNameInput').style.display = 'none';
+            document.getElementById('guestNameText').value = '';
+            document.getElementById('clearSelection').disabled = true;
+        }
+
+        function updateCropsList() {
+            const container = document.getElementById('cropsContainer');
+            document.getElementById('cropCount').textContent = crops.length;
+            
+            if (crops.length === 0) {
+                container.innerHTML = '<div style="padding: 20px; text-align: center; color: #666;">No crops yet. Start selecting guest name regions.</div>';
+                return;
+            }
+            
+            container.innerHTML = crops.map(crop => `
+                <div class="crop-item">
+                    <canvas class="crop-preview" width="60" height="40" id="preview_${crop.id}"></canvas>
+                    <div class="crop-info">
+                        <div class="crop-name">${crop.guestName}</div>
+                        <div class="crop-dims">${crop.fileName} • ${crop.dimensions.width}×${crop.dimensions.height}</div>
+                    </div>
+                    <div class="crop-actions">
+                        <button onclick="deleteCrop(${crop.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Draw preview images
+            setTimeout(() => {
+                crops.forEach(crop => {
+                    const previewCanvas = document.getElementById(`preview_${crop.id}`);
+                    if (previewCanvas) {
+                        const previewCtx = previewCanvas.getContext('2d');
+                        const img = new Image();
+                        img.onload = function() {
+                            previewCtx.drawImage(img, 0, 0, 60, 40);
+                        };
+                        img.src = crop.dataUrl;
+                    }
+                });
+            }, 100);
+            
+            document.getElementById('downloadCrops').disabled = crops.length === 0;
+        }
+
+        function deleteCrop(cropId) {
+            if (!confirm('Delete this crop?')) return;
+            
+            const cropIndex = crops.findIndex(c => c.id === cropId);
+            if (cropIndex >= 0) {
+                const crop = crops[cropIndex];
+                crops.splice(cropIndex, 1);
+                
+                // Update file crop count
+                const file = files.find(f => f.name === crop.fileName);
+                if (file) file.cropCount--;
+                
+                updateCropsList();
+                updateFileList();
+                saveProgress();
+                
+                showAlert('success', 'Crop deleted');
+            }
+        }
+
+        function updateZoom() {
+            const slider = document.getElementById('zoomSlider');
+            imageScale = parseFloat(slider.value);
+            document.getElementById('zoomValue').textContent = Math.round(imageScale * 100) + '%';
+            drawImage();
+            clearSelection();
+        }
+
+        async function downloadAllCrops() {
+            if (crops.length === 0) {
+                showAlert('error', 'No crops to download');
+                return;
+            }
+            
+            try {
+                // First try to export training data via server
+                const response = await fetch('http://localhost:5000/api/export_training_data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        showAlert('success', `✅ Server: ${result.message}`);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.warn('Server export failed, downloading locally:', error);
+            }
+            
+            // Fallback: download individual files
+            crops.forEach((crop, index) => {
+                const fileName = `${crop.fileName.replace(/\.[^/.]+$/, "")}_${crop.guestName.replace(/[^a-zA-Z0-9]/g, '_')}_crop_${index + 1}.png`;
+                
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = crop.dataUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            
+            showAlert('success', `📥 Downloaded ${crops.length} crop images locally`);
+        }
+
+        function resetAll() {
+            if (!confirm('Reset all progress? This will clear all crops and file selections.')) return;
+            
+            files = [];
+            crops = [];
+            currentFileIndex = -1;
+            currentImage = null;
+            
+            updateFileList();
+            updateCropsList();
+            updateProgress();
+            clearSelection();
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('currentFile').textContent = 'No file selected';
+            
+            localStorage.removeItem('cropperProgress');
+            showAlert('success', 'All progress reset');
+        }
+
+        function updateProgress() {
+            const completed = files.filter(f => f.completed).length;
+            const total = files.length;
+            const percentage = total > 0 ? (completed / total) * 100 : 0;
+            
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${completed} of ${total} files completed`;
+        }
+
+        function saveProgress() {
+            const progress = {
+                files: files.map(f => ({
+                    name: f.name,
+                    completed: f.completed,
+                    cropCount: f.cropCount
+                })),
+                crops: crops.map(c => ({
+                    fileName: c.fileName,
+                    guestName: c.guestName,
+                    dimensions: c.dimensions,
+                    dataUrl: c.dataUrl
+                }))
+            };
+            
+            localStorage.setItem('cropperProgress', JSON.stringify(progress));
+        }
+
+        function loadSavedProgress() {
+            const saved = localStorage.getItem('cropperProgress');
+            if (!saved) return;
+            
+            try {
+                const progress = JSON.parse(saved);
+                
+                // Restore crops
+                crops = progress.crops.map((c, index) => ({
+                    id: Date.now() + index,
+                    fileName: c.fileName,
+                    guestName: c.guestName,
+                    dimensions: c.dimensions,
+                    dataUrl: c.dataUrl
+                }));
+                
+                updateCropsList();
+                showAlert('success', `Restored ${crops.length} saved crops`);
+            } catch (e) {
+                console.error('Failed to load saved progress:', e);
+            }
+        }
+
+        function showAlert(type, message) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = `alert ${type}`;
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                cancelCrop();
+            } else if (e.key === 'Enter' && document.getElementById('guestNameInput').style.display === 'block') {
+                saveCrop();
+            } else if (e.key === 'ArrowLeft' && currentFileIndex > 0) {
+                loadFile(currentFileIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentFileIndex < files.length - 1) {
+                loadFile(currentFileIndex + 1);
+            }
+        });
+    </script>
+    
+    <!-- JSZip for ZIP file creation (optional) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,758 @@
+[
+  {
+    "id": "20251027_034317Agustina_Sierra",
+    "filename": "20251026_133432_Agustina_Sierra_20251027_034317.png",
+    "guest_name": "Agustina Sierra",
+    "source_file": "20251026_133432.jpg",
+    "dimensions": {
+      "x": 848,
+      "y": 942,
+      "width": 742,
+      "height": 187
+    },
+    "created_at": "2025-10-27T03:43:17.719838",
+    "file_path": "data/manual_crops/20251026_133432_Agustina_Sierra_20251027_034317.png"
+  },
+  {
+    "id": "20251027_034438Leslie_Cota",
+    "filename": "20251026_133445_Leslie_Cota_20251027_034438.png",
+    "guest_name": "Leslie Cota",
+    "source_file": "20251026_133445.jpg",
+    "dimensions": {
+      "x": 866,
+      "y": 782,
+      "width": 618,
+      "height": 209
+    },
+    "created_at": "2025-10-27T03:44:38.547212",
+    "file_path": "data/manual_crops/20251026_133445_Leslie_Cota_20251027_034438.png"
+  },
+  {
+    "id": "20251027_034518Maribel_Alvarez",
+    "filename": "20251026_133457_Maribel_Alvarez_20251027_034518.png",
+    "guest_name": "Maribel Alvarez",
+    "source_file": "20251026_133457.jpg",
+    "dimensions": {
+      "x": 808,
+      "y": 835,
+      "width": 809,
+      "height": 164
+    },
+    "created_at": "2025-10-27T03:45:18.557126",
+    "file_path": "data/manual_crops/20251026_133457_Maribel_Alvarez_20251027_034518.png"
+  },
+  {
+    "id": "20251027_034539Humberto_Zamarano",
+    "filename": "20251026_133521_Humberto_Zamarano_20251027_034539.png",
+    "guest_name": "Humberto Zamarano",
+    "source_file": "20251026_133521.jpg",
+    "dimensions": {
+      "x": 781,
+      "y": 848,
+      "width": 996,
+      "height": 173
+    },
+    "created_at": "2025-10-27T03:45:39.811161",
+    "file_path": "data/manual_crops/20251026_133521_Humberto_Zamarano_20251027_034539.png"
+  },
+  {
+    "id": "20251027_034559Victor_Robles",
+    "filename": "20251026_133534_Victor_Robles_20251027_034559.png",
+    "guest_name": "Victor Robles",
+    "source_file": "20251026_133534.jpg",
+    "dimensions": {
+      "x": 879,
+      "y": 764,
+      "width": 804,
+      "height": 178
+    },
+    "created_at": "2025-10-27T03:45:59.103145",
+    "file_path": "data/manual_crops/20251026_133534_Victor_Robles_20251027_034559.png"
+  },
+  {
+    "id": "20251027_034622Adrian_Felix",
+    "filename": "20251026_133629_Adrian_Felix_20251027_034622.png",
+    "guest_name": "Adrian Felix",
+    "source_file": "20251026_133629.jpg",
+    "dimensions": {
+      "x": 901,
+      "y": 733,
+      "width": 711,
+      "height": 204
+    },
+    "created_at": "2025-10-27T03:46:22.636561",
+    "file_path": "data/manual_crops/20251026_133629_Adrian_Felix_20251027_034622.png"
+  },
+  {
+    "id": "20251027_034652Gabriel_Mancilla",
+    "filename": "20251026_133717_Gabriel_Mancilla_20251027_034652.png",
+    "guest_name": "Gabriel Mancilla",
+    "source_file": "20251026_133717.jpg",
+    "dimensions": {
+      "x": 879,
+      "y": 715,
+      "width": 778,
+      "height": 187
+    },
+    "created_at": "2025-10-27T03:46:52.301860",
+    "file_path": "data/manual_crops/20251026_133717_Gabriel_Mancilla_20251027_034652.png"
+  },
+  {
+    "id": "20251027_034730Cristina_Villalobos",
+    "filename": "20251026_133858_Cristina_Villalobos_20251027_034730.png",
+    "guest_name": "Cristina Villalobos",
+    "source_file": "20251026_133858.jpg",
+    "dimensions": {
+      "x": 888,
+      "y": 617,
+      "width": 880,
+      "height": 151
+    },
+    "created_at": "2025-10-27T03:47:30.271159",
+    "file_path": "data/manual_crops/20251026_133858_Cristina_Villalobos_20251027_034730.png"
+  },
+  {
+    "id": "20251027_034745Joseph_Rivera",
+    "filename": "20251026_133911_Joseph_Rivera_20251027_034745.png",
+    "guest_name": "Joseph Rivera",
+    "source_file": "20251026_133911.jpg",
+    "dimensions": {
+      "x": 826,
+      "y": 742,
+      "width": 711,
+      "height": 191
+    },
+    "created_at": "2025-10-27T03:47:45.315458",
+    "file_path": "data/manual_crops/20251026_133911_Joseph_Rivera_20251027_034745.png"
+  },
+  {
+    "id": "20251027_034827Jos\u00e9_Refugio_Garc\u00eda_Ramirez",
+    "filename": "20251026_133944_Jos\u00e9_Refugio_Garc\u00eda_Ramirez_20251027_034827.png",
+    "guest_name": "Jos\u00e9 Refugio Garc\u00eda Ramirez",
+    "source_file": "20251026_133944.jpg",
+    "dimensions": {
+      "x": 808,
+      "y": 738,
+      "width": 1129,
+      "height": 173
+    },
+    "created_at": "2025-10-27T03:48:27.799776",
+    "file_path": "data/manual_crops/20251026_133944_Jos\u00e9_Refugio_Garc\u00eda_Ramirez_20251027_034827.png"
+  },
+  {
+    "id": "20251027_034846Martina_M\u00e1rquez",
+    "filename": "20251026_134007_Martina_M\u00e1rquez_20251027_034846.png",
+    "guest_name": "Martina M\u00e1rquez",
+    "source_file": "20251026_134007.jpg",
+    "dimensions": {
+      "x": 888,
+      "y": 778,
+      "width": 969,
+      "height": 204
+    },
+    "created_at": "2025-10-27T03:48:46.563631",
+    "file_path": "data/manual_crops/20251026_134007_Martina_M\u00e1rquez_20251027_034846.png"
+  },
+  {
+    "id": "20251027_034913Jos\u00e9_L_Espinoza",
+    "filename": "20251026_134021_Jos\u00e9_L_Espinoza_20251027_034913.png",
+    "guest_name": "Jos\u00e9 L. Espinoza",
+    "source_file": "20251026_134021.jpg",
+    "dimensions": {
+      "x": 852,
+      "y": 800,
+      "width": 862,
+      "height": 196
+    },
+    "created_at": "2025-10-27T03:49:13.029151",
+    "file_path": "data/manual_crops/20251026_134021_Jos\u00e9_L_Espinoza_20251027_034913.png"
+  },
+  {
+    "id": "20251027_034931Arturo_Gonzalez",
+    "filename": "20251026_134036_Arturo_Gonzalez_20251027_034931.png",
+    "guest_name": "Arturo Gonzalez",
+    "source_file": "20251026_134036.jpg",
+    "dimensions": {
+      "x": 781,
+      "y": 792,
+      "width": 853,
+      "height": 169
+    },
+    "created_at": "2025-10-27T03:49:31.409730",
+    "file_path": "data/manual_crops/20251026_134036_Arturo_Gonzalez_20251027_034931.png"
+  },
+  {
+    "id": "20251027_034958Emma_Hernandez",
+    "filename": "20251026_134046_Emma_Hernandez_20251027_034958.png",
+    "guest_name": "Emma Hernandez",
+    "source_file": "20251026_134046.jpg",
+    "dimensions": {
+      "x": 803,
+      "y": 720,
+      "width": 862,
+      "height": 160
+    },
+    "created_at": "2025-10-27T03:49:58.245531",
+    "file_path": "data/manual_crops/20251026_134046_Emma_Hernandez_20251027_034958.png"
+  },
+  {
+    "id": "20251027_035017Emma_Hernandez",
+    "filename": "20251026_134105_Emma_Hernandez_20251027_035017.png",
+    "guest_name": "Emma Hernandez",
+    "source_file": "20251026_134105.jpg",
+    "dimensions": {
+      "x": 941,
+      "y": 836,
+      "width": 831,
+      "height": 160
+    },
+    "created_at": "2025-10-27T03:50:17.856595",
+    "file_path": "data/manual_crops/20251026_134105_Emma_Hernandez_20251027_035017.png"
+  },
+  {
+    "id": "20251027_035030Omar_Raya",
+    "filename": "20251026_134213_Omar_Raya_20251027_035030.png",
+    "guest_name": "Omar Raya",
+    "source_file": "20251026_134213.jpg",
+    "dimensions": {
+      "x": 826,
+      "y": 729,
+      "width": 573,
+      "height": 178
+    },
+    "created_at": "2025-10-27T03:50:30.484705",
+    "file_path": "data/manual_crops/20251026_134213_Omar_Raya_20251027_035030.png"
+  },
+  {
+    "id": "20251027_035424Juan_Carlos_Rodriguez",
+    "filename": "20251026_134510_Juan_Carlos_Rodriguez_20251027_035424.png",
+    "guest_name": "Juan Carlos Rodriguez",
+    "source_file": "20251026_134510.jpg",
+    "dimensions": {
+      "x": 883,
+      "y": 868,
+      "width": 1129,
+      "height": 173
+    },
+    "created_at": "2025-10-27T03:54:24.084673",
+    "file_path": "data/manual_crops/20251026_134510_Juan_Carlos_Rodriguez_20251027_035424.png"
+  },
+  {
+    "id": "20251027_035457Cira_Bernal_Avila",
+    "filename": "20251026_134521_Cira_Bernal_Avila_20251027_035457.png",
+    "guest_name": "Cira Bernal Avila",
+    "source_file": "20251026_134521.jpg",
+    "dimensions": {
+      "x": 839,
+      "y": 782,
+      "width": 1036,
+      "height": 204
+    },
+    "created_at": "2025-10-27T03:54:57.336774",
+    "file_path": "data/manual_crops/20251026_134521_Cira_Bernal_Avila_20251027_035457.png"
+  },
+  {
+    "id": "20251027_035529Ciro_Bernal_Avila",
+    "filename": "20251026_134521_Ciro_Bernal_Avila_20251027_035529.png",
+    "guest_name": "Ciro Bernal Avila",
+    "source_file": "20251026_134521.jpg",
+    "dimensions": {
+      "x": 818,
+      "y": 787,
+      "width": 965,
+      "height": 175
+    },
+    "created_at": "2025-10-27T03:55:29.641546",
+    "file_path": "data/manual_crops/20251026_134521_Ciro_Bernal_Avila_20251027_035529.png"
+  },
+  {
+    "id": "20251027_035608Rosalinda_Casillas_de_Campos",
+    "filename": "20251026_134532_Rosalinda_Casillas_de_Campos_20251027_035608.png",
+    "guest_name": "Rosalinda Casillas de Campos",
+    "source_file": "20251026_134532.jpg",
+    "dimensions": {
+      "x": 818,
+      "y": 841,
+      "width": 1321,
+      "height": 137
+    },
+    "created_at": "2025-10-27T03:56:08.663581",
+    "file_path": "data/manual_crops/20251026_134532_Rosalinda_Casillas_de_Campos_20251027_035608.png"
+  },
+  {
+    "id": "20251027_035626Roberto_Felix_Palacios",
+    "filename": "20251026_134539_Roberto_Felix_Palacios_20251027_035626.png",
+    "guest_name": "Roberto Felix Palacios",
+    "source_file": "20251026_134539.jpg",
+    "dimensions": {
+      "x": 818,
+      "y": 769,
+      "width": 968,
+      "height": 143
+    },
+    "created_at": "2025-10-27T03:56:26.845051",
+    "file_path": "data/manual_crops/20251026_134539_Roberto_Felix_Palacios_20251027_035626.png"
+  },
+  {
+    "id": "20251027_035714Arias_Atilano",
+    "filename": "20251026_134550_Arias_Atilano_20251027_035714.png",
+    "guest_name": "Arias Atilano",
+    "source_file": "20251026_134550.jpg",
+    "dimensions": {
+      "x": 1104,
+      "y": 740,
+      "width": 724,
+      "height": 171
+    },
+    "created_at": "2025-10-27T03:57:14.307720",
+    "file_path": "data/manual_crops/20251026_134550_Arias_Atilano_20251027_035714.png"
+  },
+  {
+    "id": "20251027_035730Eva_Urbina",
+    "filename": "20251026_134618_Eva_Urbina_20251027_035730.png",
+    "guest_name": "Eva Urbina",
+    "source_file": "20251026_134618.jpg",
+    "dimensions": {
+      "x": 806,
+      "y": 824,
+      "width": 714,
+      "height": 140
+    },
+    "created_at": "2025-10-27T03:57:30.232266",
+    "file_path": "data/manual_crops/20251026_134618_Eva_Urbina_20251027_035730.png"
+  },
+  {
+    "id": "20251027_035753Noe_Martinez_Miss",
+    "filename": "20251026_134627_Noe_Martinez_Miss_20251027_035753.png",
+    "guest_name": "Noe Martinez Miss",
+    "source_file": "20251026_134627.jpg",
+    "dimensions": {
+      "x": 869,
+      "y": 708,
+      "width": 1032,
+      "height": 140
+    },
+    "created_at": "2025-10-27T03:57:53.546379",
+    "file_path": "data/manual_crops/20251026_134627_Noe_Martinez_Miss_20251027_035753.png"
+  },
+  {
+    "id": "20251027_035852Enrique_Reyes_Camarillo",
+    "filename": "20251026_134637_Enrique_Reyes_Camarillo_20251027_035852.png",
+    "guest_name": "Enrique Reyes Camarillo",
+    "source_file": "20251026_134637.jpg",
+    "dimensions": {
+      "x": 796,
+      "y": 703,
+      "width": 997,
+      "height": 162
+    },
+    "created_at": "2025-10-27T03:58:52.677386",
+    "file_path": "data/manual_crops/20251026_134637_Enrique_Reyes_Camarillo_20251027_035852.png"
+  },
+  {
+    "id": "20251027_035915Eduardo_Hernandez",
+    "filename": "20251026_134644_Eduardo_Hernandez_20251027_035915.png",
+    "guest_name": "Eduardo Hernandez",
+    "source_file": "20251026_134644.jpg",
+    "dimensions": {
+      "x": 790,
+      "y": 730,
+      "width": 810,
+      "height": 137
+    },
+    "created_at": "2025-10-27T03:59:15.283539",
+    "file_path": "data/manual_crops/20251026_134644_Eduardo_Hernandez_20251027_035915.png"
+  },
+  {
+    "id": "20251027_035934Jose_I_Rivas",
+    "filename": "20251026_134654_Jose_I_Rivas_20251027_035934.png",
+    "guest_name": "Jose I. Rivas",
+    "source_file": "20251026_134654.jpg",
+    "dimensions": {
+      "x": 907,
+      "y": 791,
+      "width": 714,
+      "height": 143
+    },
+    "created_at": "2025-10-27T03:59:34.969273",
+    "file_path": "data/manual_crops/20251026_134654_Jose_I_Rivas_20251027_035934.png"
+  },
+  {
+    "id": "20251027_035948Cynthia_Moreno",
+    "filename": "20251026_134708_Cynthia_Moreno_20251027_035948.png",
+    "guest_name": "Cynthia Moreno",
+    "source_file": "20251026_134708.jpg",
+    "dimensions": {
+      "x": 787,
+      "y": 667,
+      "width": 784,
+      "height": 168
+    },
+    "created_at": "2025-10-27T03:59:48.935601",
+    "file_path": "data/manual_crops/20251026_134708_Cynthia_Moreno_20251027_035948.png"
+  },
+  {
+    "id": "20251027_040002Edith_Levy",
+    "filename": "20251026_134717_Edith_Levy_20251027_040002.png",
+    "guest_name": "Edith Levy",
+    "source_file": "20251026_134717.jpg",
+    "dimensions": {
+      "x": 872,
+      "y": 718,
+      "width": 549,
+      "height": 162
+    },
+    "created_at": "2025-10-27T04:00:02.040782",
+    "file_path": "data/manual_crops/20251026_134717_Edith_Levy_20251027_040002.png"
+  },
+  {
+    "id": "20251027_040021Angelica_Lopez",
+    "filename": "20251026_134728_Angelica_Lopez_20251027_040021.png",
+    "guest_name": "Angelica Lopez",
+    "source_file": "20251026_134728.jpg",
+    "dimensions": {
+      "x": 780,
+      "y": 699,
+      "width": 708,
+      "height": 171
+    },
+    "created_at": "2025-10-27T04:00:21.878504",
+    "file_path": "data/manual_crops/20251026_134728_Angelica_Lopez_20251027_040021.png"
+  },
+  {
+    "id": "20251027_040036Jorge_Lopez",
+    "filename": "20251026_134738_Jorge_Lopez_20251027_040036.png",
+    "guest_name": "Jorge Lopez",
+    "source_file": "20251026_134738.jpg",
+    "dimensions": {
+      "x": 872,
+      "y": 699,
+      "width": 641,
+      "height": 130
+    },
+    "created_at": "2025-10-27T04:00:36.328418",
+    "file_path": "data/manual_crops/20251026_134738_Jorge_Lopez_20251027_040036.png"
+  },
+  {
+    "id": "20251027_040052Alyssa_Lopez",
+    "filename": "20251026_134746_Alyssa_Lopez_20251027_040052.png",
+    "guest_name": "Alyssa Lopez",
+    "source_file": "20251026_134746.jpg",
+    "dimensions": {
+      "x": 834,
+      "y": 664,
+      "width": 629,
+      "height": 133
+    },
+    "created_at": "2025-10-27T04:00:52.359760",
+    "file_path": "data/manual_crops/20251026_134746_Alyssa_Lopez_20251027_040052.png"
+  },
+  {
+    "id": "20251027_040109Jazmine_Valdez",
+    "filename": "20251026_134754_Jazmine_Valdez_20251027_040109.png",
+    "guest_name": "Jazmine Valdez",
+    "source_file": "20251026_134754.jpg",
+    "dimensions": {
+      "x": 894,
+      "y": 778,
+      "width": 768,
+      "height": 127
+    },
+    "created_at": "2025-10-27T04:01:09.472825",
+    "file_path": "data/manual_crops/20251026_134754_Jazmine_Valdez_20251027_040109.png"
+  },
+  {
+    "id": "20251027_040125Raul_Hernandez",
+    "filename": "20251026_134802_Raul_Hernandez_20251027_040125.png",
+    "guest_name": "Raul Hernandez",
+    "source_file": "20251026_134802.jpg",
+    "dimensions": {
+      "x": 780,
+      "y": 650,
+      "width": 759,
+      "height": 168
+    },
+    "created_at": "2025-10-27T04:01:25.407392",
+    "file_path": "data/manual_crops/20251026_134802_Raul_Hernandez_20251027_040125.png"
+  },
+  {
+    "id": "20251027_040150Twyla_OConner",
+    "filename": "20251026_134815_Twyla_OConner_20251027_040150.png",
+    "guest_name": "Twyla O'Conner",
+    "source_file": "20251026_134815.jpg",
+    "dimensions": {
+      "x": 844,
+      "y": 711,
+      "width": 889,
+      "height": 137
+    },
+    "created_at": "2025-10-27T04:01:50.618548",
+    "file_path": "data/manual_crops/20251026_134815_Twyla_OConner_20251027_040150.png"
+  },
+  {
+    "id": "20251027_040208Blanca_E_Cisneros",
+    "filename": "20251026_134846_Blanca_E_Cisneros_20251027_040208.png",
+    "guest_name": "Blanca E. Cisneros",
+    "source_file": "20251026_134846.jpg",
+    "dimensions": {
+      "x": 875,
+      "y": 757,
+      "width": 863,
+      "height": 140
+    },
+    "created_at": "2025-10-27T04:02:08.644580",
+    "file_path": "data/manual_crops/20251026_134846_Blanca_E_Cisneros_20251027_040208.png"
+  },
+  {
+    "id": "20251027_040225Ana_Isela_Lopez",
+    "filename": "20251026_134852_Ana_Isela_Lopez_20251027_040225.png",
+    "guest_name": "Ana Isela Lopez",
+    "source_file": "20251026_134852.jpg",
+    "dimensions": {
+      "x": 821,
+      "y": 735,
+      "width": 803,
+      "height": 181
+    },
+    "created_at": "2025-10-27T04:02:25.926993",
+    "file_path": "data/manual_crops/20251026_134852_Ana_Isela_Lopez_20251027_040225.png"
+  },
+  {
+    "id": "20251027_040259Ramireo_Martinez_Gandara",
+    "filename": "20251026_134902_Ramireo_Martinez_Gandara_20251027_040259.png",
+    "guest_name": "Ramireo Martinez Gandara",
+    "source_file": "20251026_134902.jpg",
+    "dimensions": {
+      "x": 780,
+      "y": 657,
+      "width": 1248,
+      "height": 130
+    },
+    "created_at": "2025-10-27T04:02:59.667129",
+    "file_path": "data/manual_crops/20251026_134902_Ramireo_Martinez_Gandara_20251027_040259.png"
+  },
+  {
+    "id": "20251027_040315Belinda_Martinez",
+    "filename": "20251026_134911_Belinda_Martinez_20251027_040315.png",
+    "guest_name": "Belinda Martinez",
+    "source_file": "20251026_134911.jpg",
+    "dimensions": {
+      "x": 856,
+      "y": 696,
+      "width": 879,
+      "height": 159
+    },
+    "created_at": "2025-10-27T04:03:15.777674",
+    "file_path": "data/manual_crops/20251026_134911_Belinda_Martinez_20251027_040315.png"
+  },
+  {
+    "id": "20251027_040345Yaneli_Casta\u00f1eda",
+    "filename": "20251026_134924_Yaneli_Casta\u00f1eda_20251027_040345.png",
+    "guest_name": "Yaneli Casta\u00f1eda",
+    "source_file": "20251026_134924.jpg",
+    "dimensions": {
+      "x": 771,
+      "y": 611,
+      "width": 876,
+      "height": 184
+    },
+    "created_at": "2025-10-27T04:03:45.710515",
+    "file_path": "data/manual_crops/20251026_134924_Yaneli_Casta\u00f1eda_20251027_040345.png"
+  },
+  {
+    "id": "20251027_040400Noemi_Salinas",
+    "filename": "20251026_134954_Noemi_Salinas_20251027_040400.png",
+    "guest_name": "Noemi Salinas",
+    "source_file": "20251026_134954.jpg",
+    "dimensions": {
+      "x": 869,
+      "y": 689,
+      "width": 641,
+      "height": 140
+    },
+    "created_at": "2025-10-27T04:04:00.797465",
+    "file_path": "data/manual_crops/20251026_134954_Noemi_Salinas_20251027_040400.png"
+  },
+  {
+    "id": "20251027_040417Jose_A_Rios",
+    "filename": "20251026_135011_Jose_A_Rios_20251027_040417.png",
+    "guest_name": "Jose A. Rios",
+    "source_file": "20251026_135011.jpg",
+    "dimensions": {
+      "x": 840,
+      "y": 805,
+      "width": 651,
+      "height": 152
+    },
+    "created_at": "2025-10-27T04:04:17.713235",
+    "file_path": "data/manual_crops/20251026_135011_Jose_A_Rios_20251027_040417.png"
+  },
+  {
+    "id": "20251027_040432Miriam_Mendez",
+    "filename": "20251026_135026_Miriam_Mendez_20251027_040432.png",
+    "guest_name": "Miriam Mendez",
+    "source_file": "20251026_135026.jpg",
+    "dimensions": {
+      "x": 860,
+      "y": 721,
+      "width": 638,
+      "height": 159
+    },
+    "created_at": "2025-10-27T04:04:32.128140",
+    "file_path": "data/manual_crops/20251026_135026_Miriam_Mendez_20251027_040432.png"
+  },
+  {
+    "id": "20251027_040831Xochitl_Ortega",
+    "filename": "20251026_135151_Xochitl_Ortega_20251027_040831.png",
+    "guest_name": "Xochitl Ortega",
+    "source_file": "20251026_135151.jpg",
+    "dimensions": {
+      "x": 933,
+      "y": 744,
+      "width": 698,
+      "height": 149
+    },
+    "created_at": "2025-10-27T04:08:31.709237",
+    "file_path": "data/manual_crops/20251026_135151_Xochitl_Ortega_20251027_040831.png"
+  },
+  {
+    "id": "20251027_040850Carlos_Alberto",
+    "filename": "20251026_135203_Carlos_Alberto_20251027_040850.png",
+    "guest_name": "Carlos Alberto",
+    "source_file": "20251026_135203.jpg",
+    "dimensions": {
+      "x": 837,
+      "y": 727,
+      "width": 616,
+      "height": 165
+    },
+    "created_at": "2025-10-27T04:08:50.967260",
+    "file_path": "data/manual_crops/20251026_135203_Carlos_Alberto_20251027_040850.png"
+  },
+  {
+    "id": "20251027_040901Diaz_Amaya",
+    "filename": "20251026_135203_Diaz_Amaya_20251027_040901.png",
+    "guest_name": "Diaz Amaya",
+    "source_file": "20251026_135203.jpg",
+    "dimensions": {
+      "x": 1494,
+      "y": 737,
+      "width": 568,
+      "height": 175
+    },
+    "created_at": "2025-10-27T04:09:01.664027",
+    "file_path": "data/manual_crops/20251026_135203_Diaz_Amaya_20251027_040901.png"
+  },
+  {
+    "id": "20251027_040922Martin_Valenzuela",
+    "filename": "20251026_135213_Martin_Valenzuela_20251027_040922.png",
+    "guest_name": "Martin Valenzuela",
+    "source_file": "20251026_135213.jpg",
+    "dimensions": {
+      "x": 837,
+      "y": 718,
+      "width": 867,
+      "height": 190
+    },
+    "created_at": "2025-10-27T04:09:22.910337",
+    "file_path": "data/manual_crops/20251026_135213_Martin_Valenzuela_20251027_040922.png"
+  },
+  {
+    "id": "20251027_040935Rosa_Ayala",
+    "filename": "20251026_135221_Rosa_Ayala_20251027_040935.png",
+    "guest_name": "Rosa Ayala",
+    "source_file": "20251026_135221.jpg",
+    "dimensions": {
+      "x": 812,
+      "y": 762,
+      "width": 657,
+      "height": 178
+    },
+    "created_at": "2025-10-27T04:09:35.033250",
+    "file_path": "data/manual_crops/20251026_135221_Rosa_Ayala_20251027_040935.png"
+  },
+  {
+    "id": "20251027_040952Javier_Avila",
+    "filename": "20251026_135231_Javier_Avila_20251027_040952.png",
+    "guest_name": "Javier Avila",
+    "source_file": "20251026_135231.jpg",
+    "dimensions": {
+      "x": 825,
+      "y": 742,
+      "width": 629,
+      "height": 165
+    },
+    "created_at": "2025-10-27T04:09:52.703991",
+    "file_path": "data/manual_crops/20251026_135231_Javier_Avila_20251027_040952.png"
+  },
+  {
+    "id": "20251027_041010Jensen_Forde",
+    "filename": "20251026_135251_Jensen_Forde_20251027_041010.png",
+    "guest_name": "Jensen Forde",
+    "source_file": "20251026_135251.jpg",
+    "dimensions": {
+      "x": 860,
+      "y": 683,
+      "width": 686,
+      "height": 162
+    },
+    "created_at": "2025-10-27T04:10:10.844802",
+    "file_path": "data/manual_crops/20251026_135251_Jensen_Forde_20251027_041010.png"
+  },
+  {
+    "id": "20251027_041042Luis_C_Leon_S",
+    "filename": "20251026_135354_Luis_C_Leon_S_20251027_041042.png",
+    "guest_name": "Luis C. Leon S",
+    "source_file": "20251026_135354.jpg",
+    "dimensions": {
+      "x": 840,
+      "y": 642,
+      "width": 676,
+      "height": 159
+    },
+    "created_at": "2025-10-27T04:10:42.365304",
+    "file_path": "data/manual_crops/20251026_135354_Luis_C_Leon_S_20251027_041042.png"
+  },
+  {
+    "id": "20251027_041054Robert_Snider",
+    "filename": "20251026_135422_Robert_Snider_20251027_041054.png",
+    "guest_name": "Robert Snider",
+    "source_file": "20251026_135422.jpg",
+    "dimensions": {
+      "x": 815,
+      "y": 542,
+      "width": 752,
+      "height": 194
+    },
+    "created_at": "2025-10-27T04:10:54.774303",
+    "file_path": "data/manual_crops/20251026_135422_Robert_Snider_20251027_041054.png"
+  },
+  {
+    "id": "20251027_041115Virginia_Aramburo",
+    "filename": "20251026_135434_Virginia_Aramburo_20251027_041115.png",
+    "guest_name": "Virginia Aramburo",
+    "source_file": "20251026_135434.jpg",
+    "dimensions": {
+      "x": 840,
+      "y": 675,
+      "width": 860,
+      "height": 178
+    },
+    "created_at": "2025-10-27T04:11:15.592325",
+    "file_path": "data/manual_crops/20251026_135434_Virginia_Aramburo_20251027_041115.png"
+  },
+  {
+    "id": "20251027_041128Jose_Obana",
+    "filename": "20251026_135453_Jose_Obana_20251027_041128.png",
+    "guest_name": "Jose Obana",
+    "source_file": "20251026_135453.jpg",
+    "dimensions": {
+      "x": 901,
+      "y": 800,
+      "width": 711,
+      "height": 156
+    },
+    "created_at": "2025-10-27T04:11:28.596494",
+    "file_path": "data/manual_crops/20251026_135453_Jose_Obana_20251027_041128.png"
+  }
+]
