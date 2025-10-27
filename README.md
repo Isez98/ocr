@@ -73,17 +73,28 @@ ocr/
 ## 🚀 Getting Started
 
 ### Quick Start
-```bash
-# Install dependencies
-pip install -r requirements.txt
 
-# Start the service
-python main.py
+1. **Environment Setup**:
+   ```bash
+   # Use the pre-configured environment (recommended for AMD GPU users)
+   source /storage/venv_profile.sh && activate_ocr
+   
+   # Or create new environment
+   python3.11 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-# Or with Docker
-docker build -t ocr-service .
-docker run -p 8001:8001 ocr-service
-```
+2. **Start the service**:
+   ```bash
+   python main.py
+   ```
+
+3. **Docker deployment**:
+   ```bash
+   docker build -t ocr-service .
+   docker run -p 8001:8001 ocr-service
+   ```
 
 ### API Usage
 ```bash

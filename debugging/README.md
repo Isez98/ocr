@@ -1,8 +1,8 @@
 # Debugging Scripts
 
-This directory contains debugging and troubleshooting tools for the OCR project.
+This directory contains essential debugging and diagnostic tools for the OCR project.
 
-## Scripts Overview
+## Core Scripts
 
 ### `debug_rocm.py`
 - **Purpose**: Comprehensive ROCm/GPU debugging and diagnostics
@@ -10,9 +10,20 @@ This directory contains debugging and troubleshooting tools for the OCR project.
 - **Usage**: `python debug_rocm.py`
 - **Output**: Detailed test results and recommendations
 
-### `fix_rocm_rx6800.py`
-- **Purpose**: Apply workarounds for AMD RX 6800 segfault issues
-- **Features**: Environment variable fixes, conservative training settings
+### `test_cpu_vs_gpu.py`
+- **Purpose**: Compare CPU vs GPU performance and isolate GPU issues
+- **Tests**: TrOCR on CPU vs GPU to identify hardware compatibility problems
+- **Usage**: `python test_cpu_vs_gpu.py`
+
+### `export_trocr_onnx.py`
+- **Purpose**: Export TrOCR to ONNX format for GPU compatibility fallback
+- **Features**: Bypasses PyTorch GPU issues, enables alternative deployment
+- **Usage**: `python export_trocr_onnx.py`
+
+### `test_onnx_trocr.py`
+- **Purpose**: Test ONNX TrOCR inference with various execution providers
+- **Features**: ROCm, MIGraphX, and CPU execution provider testing
+- **Usage**: `python test_onnx_trocr.py`
 - **Usage**: `python fix_rocm_rx6800.py`
 - **Status**: ⚠️ Workarounds unsuccessful for RX 6800 + ROCm 6.1
 
