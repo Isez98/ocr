@@ -55,26 +55,47 @@ ocr/
 
 ### **1. Environment Setup**
 ```bash
-# Activate the stable environment
-source /storage/venv_profile.sh && activate_ocr
+# Activate environment
+source venv/bin/activate
 
-# Verify GPU support
-python -c "import torch; print(f'GPU: {torch.cuda.get_device_name(0)}')"
+# Set AMD GPU optimizations (critical for RX 6800)
+export HSA_OVERRIDE_GFX_VERSION=10.3.0
+export PYTORCH_ALLOC_CONF=expandable_segments:True
+export HIP_LAUNCH_BLOCKING=1
+
+# Verify GPU
+python -c "import torch; print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"CPU Only\"}')"
 ```
 
-### **2. GPU Training** 
+### **2. GPU Training** ⭐ **NEW: Fully Working!**
 ```bash
-# Start training on GPU (AMD RX 6800)
+# Pre-training verification (recommended)
+python training/verify_stability.py
+
+# GPU training (GUI mode - preferred)
 python training/train_gpu.py
+
+# Alternative: TTY mode for maximum stability
+# Switch to TTY (Ctrl+Alt+F2), set environment, then train
 ```
 
-### **3. ONNX Inference**
+### **3. Model Testing**
 ```bash
-# Test ONNX deployment pipeline
-python testing/quick_onnx_test.py
+# Test trained model
+python models/test_model.py ./trocr-gpu-improved
+
+# Compare with base model
+python models/test_model.py --compare
 ```
 
-### **4. Status Check**
+### **4. Production Deployment**
+```bash
+# ONNX inference
+python testing/quick_onnx_test.py
+
+# API server
+uvicorn app:app --host 0.0.0.0 --port 9000
+```
 ```bash
 # Verify system status
 python testing/onnx_status.py

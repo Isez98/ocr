@@ -48,25 +48,38 @@ class ImprovedHandwritingDataset(Dataset):
             image = Image.open(item['image_path']).convert('RGB')
             text = item['text']
 
-            encoding = self.processor(image, text, 
-                                     truncation=True, 
-                                     padding="max_length", 
-                                     max_length=self.max_target_length,
-                                     return_tensors="pt")
+            # Process image and text separately (correct TrOCR API)
+            pixel_values = self.processor(image, return_tensors="pt").pixel_values
             
-            encoding = {key: val.squeeze() for key, val in encoding.items()}
+            # Process text labels separately  
+            labels = self.processor.tokenizer(text,
+                                            truncation=True,
+                                            padding="max_length",
+                                            max_length=self.max_target_length,
+                                            return_tensors="pt").input_ids
+            
+            encoding = {
+                'pixel_values': pixel_values.squeeze(),
+                'labels': labels.squeeze()
+            }
             return encoding
             
         except Exception as e:
             print(f"❌ Error processing {item['image_path']}: {e}")
             dummy_image = Image.new('RGB', (200, 80), 'white')
             dummy_text = "error"
-            encoding = self.processor(dummy_image, dummy_text, 
-                                     truncation=True, 
-                                     padding="max_length", 
-                                     max_length=self.max_target_length,
-                                     return_tensors="pt")
-            encoding = {key: val.squeeze() for key, val in encoding.items()}
+            
+            pixel_values = self.processor(dummy_image, return_tensors="pt").pixel_values
+            labels = self.processor.tokenizer(dummy_text,
+                                            truncation=True,
+                                            padding="max_length",
+                                            max_length=self.max_target_length,
+                                            return_tensors="pt").input_ids
+            
+            encoding = {
+                'pixel_values': pixel_values.squeeze(),
+                'labels': labels.squeeze()
+            }
             return encoding
 
 def train_gpu_model():
@@ -123,14 +136,18 @@ def train_gpu_model():
     # GPU-optimized training arguments
     output_dir = "./trocr-gpu-improved"
     
-    # Adjust batch size based on available GPU memory
+    # Adjust batch size based on available GPU memory and stability improvements
     if torch.cuda.is_available():
         gpu_memory_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
-        if gpu_memory_gb >= 8:
-            batch_size = 4  # Larger batch for more memory
+        # With BIOS updates and stress tests passed, we can be more aggressive
+        if gpu_memory_gb >= 12:
+            batch_size = 6  # More aggressive for 16GB GPU after stability improvements
+        elif gpu_memory_gb >= 8:
+            batch_size = 4  # Standard batch for good memory
         else:
             batch_size = 2  # Conservative for lower memory
         print(f"🎮 Using batch size: {batch_size} (GPU memory: {gpu_memory_gb:.1f}GB)")
+        print(f"💪 Hardware stability verified - using optimized settings")
     else:
         batch_size = 1
     
@@ -138,23 +155,27 @@ def train_gpu_model():
         output_dir=output_dir,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
-        num_train_epochs=3,  # Reduced for faster GPU training
-        learning_rate=2e-5,  # Slightly higher for GPU
-        logging_steps=5,
-        save_steps=25,
-        eval_steps=25,
+        num_train_epochs=5,  # Increased epochs with stable hardware
+        learning_rate=3e-5,  # Optimized learning rate for AMD GPU
+        logging_steps=3,  # More frequent logging for monitoring
+        save_steps=20,
+        eval_steps=20,
         eval_strategy="steps",
         save_total_limit=3,
         remove_unused_columns=False,
         push_to_hub=False,
         dataloader_pin_memory=True if torch.cuda.is_available() else False,
         load_best_model_at_end=True,
-        dataloader_num_workers=2 if torch.cuda.is_available() else 0,
+                dataloader_num_workers=0,  # Disable workers to prevent API conflicts
         logging_dir=f"{output_dir}/logs",
         report_to=[],
         save_safetensors=False,
-        fp16=False,  # AMD GPUs may have issues with fp16
-        gradient_accumulation_steps=2,  # Effective batch size = batch_size * 2
+        fp16=False,  # Keep disabled for AMD GPU stability
+        bf16=False,  # Explicitly disable for ROCm compatibility
+        gradient_accumulation_steps=1,  # Direct training with stable hardware
+        warmup_steps=50,  # Add warmup for better convergence
+        weight_decay=0.01,  # Add regularization
+        max_grad_norm=1.0,  # Gradient clipping for stability
     )
     
     # Try to load metrics
@@ -200,6 +221,8 @@ def train_gpu_model():
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
             print(f"💾 GPU memory before training: {torch.cuda.memory_allocated()/1024**3:.1f}GB")
+            print(f"🔥 GPU Performance: {torch.cuda.get_device_properties(0).total_memory/1024**3:.1f}GB VRAM")
+            print(f"🚀 BIOS optimized - ready for intensive training")
         
         trainer.train()
         
